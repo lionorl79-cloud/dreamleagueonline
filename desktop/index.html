@@ -2,7 +2,7 @@
 <html lang="he">
 <head>
 <meta charset="UTF-8">
-<title>ליגת החלומות ברשת</title>
+<title>ליגת החלומות ברשת - Lion79</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
@@ -39,10 +39,11 @@ header {
     object-fit: cover;
 }
 
-/* ===== תפריט ===== */
+/* ===== תפריט עליון ===== */
 nav {
     margin-top: 15px;
     font-size: 20px;
+    font-weight: bold;
 }
 
 nav a {
@@ -55,7 +56,7 @@ nav a:hover {
     color: #ffc107;
 }
 
-/* ===== קופסאות ===== */
+/* ===== תיבות עמוד ===== */
 .page-box {
     background: rgba(255,255,255,0.08);
     padding: 20px;
@@ -63,13 +64,53 @@ nav a:hover {
     width: 55%;
     max-width: 800px;
     margin: 20px auto;
-    box-shadow: 0 0 12px rgba(0,0,0,0.4);
+    box-shadow: 0 0 14px rgba(0,0,0,0.4);
 }
 
-/* ===== טבלת מחזורים ===== */
-.schedule-table {
-    width: 80%;
+/* ===== טבלת ליגה ===== */
+table {
+    width: 85%;
     margin: 20px auto;
+    background: rgba(255,255,255,0.1);
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+th, td {
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background: rgba(0,0,0,0.35);
+    font-size: 18px;
+}
+
+.highlight {
+    background: #ffc107;
+    color: #000;
+}
+
+/* ===== מחזורים ===== */
+.round-box {
+    margin: 10px auto;
+    padding: 10px;
+    width: 260px;
+    background: rgba(255,255,255,0.12);
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.18);
+}
+
+.match-line {
+    padding: 3px 0;
+}
+
+/* ===== לוח הגרלת משחקים — מסגרות קטנות ===== */
+.schedule-table {
+    width: 300px;
+    margin: 0 auto;
     border-collapse: collapse;
     background: rgba(255,255,255,0.10);
     border-radius: 12px;
@@ -77,25 +118,26 @@ nav a:hover {
 }
 
 .schedule-table th {
-    background: rgba(0,0,0,0.30);
-    padding: 10px;
-    font-size: 18px;
-}
-
-.schedule-table td {
+    background: rgba(0,0,0,0.40);
     padding: 8px;
-    border-bottom: 1px solid rgba(255,255,255,0.15);
     font-size: 16px;
 }
 
-.round-title {
-    margin-top: 35px;
-    margin-bottom: 10px;
-    font-size: 26px;
-    font-weight: bold;
+.schedule-table td {
+    padding: 6px;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
 }
 
-/* שחקנים בתחתית */
+/* כותרות מחזורים */
+.round-title {
+    margin-top: 15px;
+    margin-bottom: 8px;
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* ===== שחקנים בתחתית ===== */
 #playersArea {
     width: 100%;
     position: fixed;
@@ -105,6 +147,7 @@ nav a:hover {
     gap: 35px;
     background: linear-gradient(transparent, rgba(0,0,0,0.45));
     padding-bottom: 10px;
+    z-index: 5;
 }
 
 .player-img {
@@ -117,40 +160,57 @@ nav a:hover {
     transform: scale(1.08);
 }
 
+/* יותר מרווח כדי שלא ייחתך */
+@media (max-height: 800px) {
+    #playersArea { bottom: -10px; }
+}
+
+/* ===== רספונסיביות ===== */
+@media (max-width: 768px) {
+    .page-box { width: 90%; }
+    .schedule-table { width: 90%; }
+    table { width: 95%; font-size: 14px; }
+    .player-img { height: 120px; }
+}
+
 </style>
 </head>
-
 <body>
 
 <header>
     <div class="logo-box">
-        <img src="logo.PNG">
+        <img src="logo.PNG" alt="לוגו ליגת החלומות">
     </div>
 
     <nav>
         <a href="#home">ראשי</a>
         <a href="#tournaments">טורנירים</a>
         <a href="#league">טבלת הליגה</a>
-        <a href="#scheduleGenerator">הגרלת לוח משחקים</a>
+        <a href="#scheduleGenerator">לוח הגרלת משחקים</a>
+        <a href="#login">הרשמה / התחברות</a>
         <a href="#admin">כניסת מנהל</a>
     </nav>
 </header>
 
-<div id="home" class="page-box">
+<div class="content">
+
+<!-- ===== דף ראשי ===== -->
+<div class="page-box" id="home">
     <h1>ברוך הבא לליגת החלומות ברשת ⚽🔥</h1>
 </div>
+
 <!-- ===== טורנירים ===== -->
-<div id="tournaments" class="page-box" style="display:none;">
+<div class="page-box" id="tournaments" style="display:none;">
     <h2>🏆 טורנירים</h2>
 
-    <button onclick="openTournament('leagueWinners')">ליגת החלומות</button>
-    <button onclick="openTournament('cupWinners')">גביע הליגה</button>
+    <button onclick="openTournament('leagueWinners')" class="tour-btn">ליגת החלומות</button>
+    <button onclick="openTournament('cupWinners')" class="tour-btn">גביע הליגה</button>
 
     <div id="innerTournamentPage"></div>
 </div>
 
-<!-- ===== טבלת ליגה ===== -->
-<div id="league" class="page-box" style="display:none;">
+<!-- ===== טבלת הליגה ===== -->
+<div class="page-box" id="league" style="display:none;">
     <h2 style="font-size:32px;">⚽ טבלת הליגה</h2>
 
     <div id="adminSection" style="display:none;">
@@ -164,9 +224,7 @@ nav a:hover {
 
         <button onclick="addResult()">הוסף</button>
         <button onclick="resetLeague()">איפוס ליגה</button>
-
-        <br><br>
-        <button onclick="logout()">יציאה</button>
+        <button onclick="logoutAdmin()">יציאה</button>
     </div>
 
     <table>
@@ -190,66 +248,369 @@ nav a:hover {
     <div id="roundsContainer"></div>
 </div>
 
-<!-- ===== מנהל ===== -->
-<div id="admin" class="page-box" style="display:none;">
-    <h2>🔐 כניסת מנהל</h2>
-    <input id="adminPass" type="password" placeholder="סיסמה">
-    <button onclick="login()">כניסה</button>
-</div>
-<!-- ===== לוח משחקים ===== -->
-<div id="scheduleGenerator" class="page-box" style="display:none;">
-    <h2>📅 הגרלת לוח משחקים (8 קבוצות)</h2>
+<!-- ===== לוח הגרלת משחקים ===== -->
+<div class="page-box" id="scheduleGenerator" style="display:none;">
+    <h2>📅 לוח הגרלת משחקים (8 קבוצות)</h2>
 
-    <p>הכנס 8 קבוצות — כל קבוצה בשורה:</p>
-
-    <textarea id="teams" style="
-        width: 50%;
-        height: 120px;
-        border-radius: 10px;
-        padding: 10px;
-        font-size: 16px;
-    "></textarea><br><br>
+    <textarea id="teams" style="width:60%; height:120px; border-radius:10px;"></textarea><br><br>
 
     <button onclick="generateSchedule()">צור לוח</button>
-    <button onclick="document.getElementById('results').innerHTML=''">איפוס</button>
+    <button onclick="resetSchedule()">איפוס</button>
 
     <div id="results"></div>
 </div>
 
+<!-- ===== כניסת משתמש / הרשמה ===== -->
+<div class="page-box" id="login" style="display:none;">
+    <h2>🔐 התחברות</h2>
+    <input id="loginEmail" type="email" placeholder="מייל"><br>
+    <input id="loginPass" type="password" placeholder="סיסמה"><br>
+    <button onclick="userLogin()">התחבר</button>
+
+    <hr style="border-color:rgba(255,255,255,0.3); margin:20px 0;">
+
+    <h2>📝 הרשמה</h2>
+    <input id="regEmail" type="email" placeholder="מייל"><br>
+    <input id="regPass" type="password" placeholder="סיסמה"><br>
+    <button onclick="userRegister()">הרשם</button>
+
+    <br><br>
+    <button onclick="userLogout()" style="background:#ff4d4d;color:white;border:none;padding:8px 15px;border-radius:6px;">
+        התנתק
+    </button>
+</div>
+
+<!-- ===== כניסת מנהל ===== -->
+<div class="page-box" id="admin" style="display:none;">
+    <h2>🔐 כניסת מנהל</h2>
+    <input id="adminPass" type="password" placeholder="סיסמה"><br><br>
+    <button onclick="loginAdmin()">כניסה</button>
+</div>
+
+</div> <!-- סוף content -->
+
+<!-- ===== שחקנים בתחתית ===== -->
+<div id="playersArea">
+    <img class="player-img" src="player1.png">
+    <img class="player-img" src="player2.png">
+    <img class="player-img" src="player3.png">
+    <img class="player-img" src="player4.png">
+    <img class="player-img" src="player5.png">
+    <img class="player-img" src="player6.png">
+</div>
 <script>
 
-function generateSchedule() {
+/* ======================================================
+   ניווט בין עמודים + שמירת עמוד אחרון
+====================================================== */
 
+document.querySelectorAll("nav a[href^='#']").forEach(link => {
+    link.onclick = () => {
+        document.querySelectorAll(".page-box").forEach(p => p.style.display = "none");
+        
+        const page = link.getAttribute("href").replace("#", "");
+        document.getElementById(page).style.display = "block";
+
+        localStorage.setItem("currentPage", page);
+        playersArea.style.display = page === "home" ? "flex" : "none";
+    };
+});
+
+window.onload = () => {
+    const saved = localStorage.getItem("currentPage") || "home";
+
+    document.querySelectorAll(".page-box").forEach(p => p.style.display = "none");
+    document.getElementById(saved).style.display = "block";
+
+    playersArea.style.display = saved === "home" ? "flex" : "none";
+
+    loadLeague();
+    updateTable();
+    updateRounds();
+    updateSidebar();
+};
+
+/* ======================================================
+   טורנירים
+====================================================== */
+
+function openTournament(type) {
+    if (type === "leagueWinners")
+        innerTournamentPage.innerHTML = "<h3>ליגת החלומות</h3>";
+    else if (type === "cupWinners")
+        innerTournamentPage.innerHTML = "<h3>גביע הליגה</h3>";
+}
+
+/* ======================================================
+   מערכת ליגה – נתונים
+====================================================== */
+
+const teams = [
+    "ריאל מדריד","ברצלונה","באיירן מינכן","ליברפול",
+    "מנצ'סטר סיטי","פריס סן זרמן","אינטר מילאן","יובנטוס"
+];
+
+let stats = {};
+let rounds = {};
+let currentRound = 1;
+
+/* יצירת מבנה נתונים אם ריק */
+function initStats() {
+    if (Object.keys(stats).length > 0) return;
+
+    teams.forEach(t => {
+        stats[t] = {
+            games: 0, wins: 0, draws: 0, losses: 0,
+            gf: 0, ga: 0, points: 0
+        };
+    });
+}
+
+/* מילוי dropdown */
+function fillDropdowns() {
+    homeTeam.innerHTML = "";
+    awayTeam.innerHTML = "";
+
+    teams.forEach(t => {
+        homeTeam.innerHTML += `<option>${t}</option>`;
+        awayTeam.innerHTML += `<option>${t}</option>`;
+    });
+}
+
+/* ======================================================
+   הוספת תוצאה למחזור
+====================================================== */
+
+function addResult() {
+    let home = homeTeam.value;
+    let away = awayTeam.value;
+    let hg = Number(homeGoals.value);
+    let ag = Number(awayGoals.value);
+
+    if (home === away) return alert("בחר שתי קבוצות שונות");
+    if (isNaN(hg) || isNaN(ag)) return alert("מספרים בלבד");
+
+    if (!rounds[currentRound]) rounds[currentRound] = [];
+
+    rounds[currentRound].push({
+        homeTeam: home,
+        awayTeam: away,
+        homeGoals: hg,
+        awayGoals: ag
+    });
+
+    updateStats(home, away, hg, ag);
+
+    if (rounds[currentRound].length === 4) currentRound++;
+
+    saveLeague();
+    updateTable();
+    updateRounds();
+    updateSidebar();
+}
+
+/* ======================================================
+   עדכון טבלת מאזן
+====================================================== */
+
+function updateStats(home, away, hg, ag) {
+    stats[home].games++;
+    stats[away].games++;
+
+    stats[home].gf += hg;
+    stats[home].ga += ag;
+
+    stats[away].gf += ag;
+    stats[away].ga += hg;
+
+    if (hg > ag) {
+        stats[home].wins++;
+        stats[home].points += 3;
+        stats[away].losses++;
+    } else if (hg < ag) {
+        stats[away].wins++;
+        stats[away].points += 3;
+        stats[home].losses++;
+    } else {
+        stats[home].draws++;
+        stats[away].draws++;
+        stats[home].points++;
+        stats[away].points++;
+    }
+}
+
+/* ======================================================
+   טבלת ליגה
+====================================================== */
+
+function updateTable() {
+    tableBody.innerHTML = "";
+
+    let sorted = Object.entries(stats).sort((a, b) => b[1].points - a[1].points);
+
+    sorted.forEach(([team, s], i) => {
+        tableBody.innerHTML += `
+        <tr class="${i == 0 ? 'highlight' : ''}">
+            <td>${team}</td>
+            <td>${s.games}</td>
+            <td>${s.wins}</td>
+            <td>${s.draws}</td>
+            <td>${s.losses}</td>
+            <td>${s.gf}</td>
+            <td>${s.ga}</td>
+            <td>${s.gf - s.ga}</td>
+            <td>${s.points}</td>
+        </tr>`;
+    });
+}
+
+/* ======================================================
+   מחזורים
+====================================================== */
+
+function updateRounds() {
+    roundsContainer.innerHTML = "";
+
+    for (let r in rounds) {
+        roundsContainer.innerHTML += `
+        <div class="round-box">
+            <b>מחזור ${r}</b>
+            ${rounds[r].map(m => `
+                <div>${m.homeTeam} - ${m.awayTeam}  ${m.homeGoals}-${m.awayGoals}</div>
+            `).join("")}
+        </div>`;
+    }
+}
+
+/* ======================================================
+   שמירה וטעינה
+====================================================== */
+
+function saveLeague() {
+    localStorage.setItem("leagueStats", JSON.stringify(stats));
+    localStorage.setItem("leagueRounds", JSON.stringify(rounds));
+    localStorage.setItem("leagueCurrentRound", currentRound);
+}
+
+function loadLeague() {
+    stats = JSON.parse(localStorage.getItem("leagueStats") || "{}");
+    rounds = JSON.parse(localStorage.getItem("leagueRounds") || "{}");
+    currentRound = Number(localStorage.getItem("leagueCurrentRound") || 1);
+
+    initStats();
+    fillDropdowns();
+}
+
+/* איפוס מלא */
+function resetLeague() {
+    if (!confirm("לאפס את כל הנתונים?")) return;
+
+    localStorage.removeItem("leagueStats");
+    localStorage.removeItem("leagueRounds");
+    localStorage.removeItem("leagueCurrentRound");
+
+    stats = {};
+    rounds = {};
+    currentRound = 1;
+
+    initStats();
+    saveLeague();
+    updateTable();
+    updateRounds();
+    updateSidebar();
+}
+
+/* ======================================================
+   כניסת מנהל
+====================================================== */
+
+function loginAdmin() {
+    if (adminPass.value === "1979") {
+        localStorage.setItem("isAdmin", "true");
+        adminSection.style.display = "block";
+        admin.style.display = "none";
+        league.style.display = "block";
+    } else {
+        alert("סיסמה שגויה");
+    }
+}
+
+function logoutAdmin() {
+    localStorage.removeItem("isAdmin");
+    adminSection.style.display = "none";
+    alert("התנתקת");
+}
+
+/* ======================================================
+   סיידר רץ
+====================================================== */
+
+function updateSidebar() {
+    let html = "";
+
+    for (let r in rounds) {
+        html += `<div class="sidebar-item"><b>מחזור ${r}</b>`;
+        rounds[r].forEach(m => {
+            html += `${m.homeTeam} - ${m.awayTeam}  ${m.homeGoals}-${m.awayGoals}<br>`;
+        });
+        html += `</div>`;
+    }
+
+    sidebarContent.innerHTML = html;
+}
+
+setInterval(() => {
+    sidebarContent.style.transform = `translateY(-${Math.random() * 300}px)`;
+}, 3000);
+
+/* ======================================================
+   הרשמה / התחברות
+====================================================== */
+
+function userRegister() {
+    alert("הרשמה תתווסף בהמשך");
+}
+
+function userLogin() {
+    alert("ההתחברות תתווסף בהמשך");
+}
+
+function userLogout() {
+    alert("התנתקת");
+}
+
+/* ======================================================
+   לוח הגרלת משחקים – גרסה מעוצבת
+====================================================== */
+
+function generateSchedule() {
     const rawText = document.getElementById("teams").value.trim();
-    const teams = rawText.split("\n").map(x => x.trim()).filter(x => x !== "");
+    const teams = rawText.split("\n").map(n => n.trim()).filter(n => n !== "");
 
     if (teams.length !== 8) {
-        alert("יש להזין בדיוק 8 קבוצות — אחת בכל שורה.");
+        alert("יש להזין 8 קבוצות בלבד.");
         return;
     }
 
-    let totalRounds = (teams.length - 1) * 2;
-    let half = teams.length / 2;
+    localStorage.setItem("scheduleTeams", rawText);
 
-    let rounds = [];
     let list = [...teams];
+    let total = 14;
+    let half = 4;
+    let allRounds = [];
 
-    for (let r = 0; r < totalRounds; r++) {
-
+    for (let r = 0; r < total; r++) {
         let matches = [];
-
         for (let i = 0; i < half; i++) {
-
             let home = list[i];
             let away = list[list.length - 1 - i];
 
             if (r % 2 === 1) [home, away] = [away, home];
-            if (r >= totalRounds / 2) [home, away] = [away, home];
+            if (r >= 7)     [home, away] = [away, home];
 
-            matches.push({ home, away });
+            matches.push([home, away]);
         }
-
-        rounds.push(matches);
+        allRounds.push(matches);
 
         let first = list[0];
         let rotate = list.slice(1);
@@ -259,75 +620,39 @@ function generateSchedule() {
 
     let html = "";
 
-    rounds.forEach((matches, index) => {
+    allRounds.forEach((matches, i) => {
         html += `
-            <div class="round-title">מחזור ${index + 1}</div>
+        <div class="round-box small">
+            <h3>מחזור ${i + 1}</h3>
             <table class="schedule-table">
                 <tr><th>בית</th><th>חוץ</th></tr>
                 ${matches.map(m => `
-                    <tr>
-                        <td>${m.home}</td>
-                        <td>${m.away}</td>
-                    </tr>
+                    <tr><td>${m[0]}</td><td>${m[1]}</td></tr>
                 `).join("")}
             </table>
-        `;
+        </div>`;
     });
 
-    document.getElementById("results").innerHTML = html;
-}
-/* ===== ניווט ===== */
-document.querySelectorAll("nav a[href^='#']").forEach(link => {
-    link.onclick = () => {
-        document.querySelectorAll(".page-box").forEach(box => {
-            box.style.display = "none";
-        });
-
-        const page = link.getAttribute("href").substring(1);
-        document.getElementById(page).style.display = "block";
-
-        playersArea.style.display = page === "home" ? "flex" : "none";
-    };
-});
-
-/* ===== נתוני ליגה ===== */
-let stats = {};
-let roundsData = {};
-let currentRound = 1;
-
-const TEAMS = [
-    "ריאל מדריד","ברצלונה","באיירן מינכן","ליברפול",
-    "מנצ'סטר סיטי","פריס סן זרמן","אינטר מילאן","יובנטוס"
-];
-
-function initStats() {
-    TEAMS.forEach(t => stats[t] = {
-        games:0,wins:0,draws:0,losses:0,gf:0,ga:0,points:0
-    });
+    results.innerHTML = html;
 }
 
-initStats();
-
-/* ===== לוגין ===== */
-function login() {
-    if (adminPass.value === "1979") {
-        admin.style.display = "none";
-        adminSection.style.display = "block";
-    } else {
-        alert("סיסמה שגויה");
-    }
+function resetSchedule() {
+    localStorage.removeItem("scheduleTeams");
+    results.innerHTML = "";
 }
 
-function logout() { location.reload(); }
-
-/* ===== סגירת BODY ===== */
+</script>
+<!-- סוף הסקריפט -->
 </script>
 
+<!-- אזור השחקנים בתחתית – 6 שחקנים כפי שביקשת -->
 <div id="playersArea">
     <img src="player1.png" class="player-img">
     <img src="player2.png" class="player-img">
     <img src="player3.png" class="player-img">
     <img src="player4.png" class="player-img">
+    <img src="player5.png" class="player-img">
+    <img src="player6.png" class="player-img"> <!-- חדש -->
 </div>
 
 </body>
